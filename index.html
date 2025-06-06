@@ -34,12 +34,33 @@
       0%, 100% { opacity: 1; }
       50% { opacity: 0.2; }
     }
+
+    #continue-btn {
+      display: none;
+      background-color: black;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #continue-container {
+      text-align: center;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
   <div id="terminal"></div>
+  <div id="continue-container">
+    <button id="continue-btn">Continue</button>
+  </div>
+
   <script>
     const terminal = document.getElementById('terminal');
+    const continueBtn = document.getElementById('continue-btn');
 
     const lines = [
       "[+] Connecting to USB interface...",
@@ -53,7 +74,10 @@
       "[✓] Connection to satellite uplink established...",
       "[*] Searching for bomb location data...",
       "[✓] LOCATION FOUND!",
-      "📍 <a href='https://earth.google.com/web/data=MkEKPwo9CiExcUVhM0wxc2ZrM0lXVkJDalU0c3YxYjRGdEQ0dFRCOEgSFgoUMEUwQzkzMDhCRTM4Nzg1RTQ0NEUgAUICCABKBwj3zoBQEAE' target='_blank'>Open location in Google Earth</a>",
+      "📍 <a href='https://earth.google.com/web/data=MkEKPwo9CiExcUVhM0wxc2ZrM0lXVkJDalU0c3YxYjRGdEQ0dFRCOEgSFgoUMEUwQzkzMDhCRTM4Nzg1RTQ0NEUgAUICCABKBwj3zoBQEAE' target='_blank'>Open location in Google Earth</a>"
+    ];
+
+    const afterContinue = [
       "\n>>> MORE INFO FOUND <<<",
       "🔴 CUT THE <span class='red-wire'>RED</span> WIRE!",
       "TIME REMAINING: 02:54:17"
@@ -65,9 +89,22 @@
         terminal.innerHTML += lines[i] + "\n";
         terminal.scrollTop = terminal.scrollHeight;
         i++;
-        setTimeout(typeLine, 1200); // type delay
+        setTimeout(typeLine, 1200);
+      } else {
+        // Wait for user to click continue
+        continueBtn.style.display = 'inline-block';
       }
     }
+
+    continueBtn.addEventListener('click', () => {
+      continueBtn.style.display = 'none';
+      afterContinue.forEach((line, index) => {
+        setTimeout(() => {
+          terminal.innerHTML += line + "\n";
+          terminal.scrollTop = terminal.scrollHeight;
+        }, index * 1200);
+      });
+    });
 
     typeLine();
   </script>
