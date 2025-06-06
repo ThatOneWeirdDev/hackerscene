@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hacker Terminal</title>
+  <style>
+    body {
+      background-color: black;
+      color: #00ff00;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 20px;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #terminal {
+      white-space: pre-wrap;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    a {
+      color: #00ffff;
+      text-decoration: underline;
+    }
+
+    .red-wire {
+      color: red;
+      font-weight: bold;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal"></div>
+  <script>
+    const terminal = document.getElementById('terminal');
+
+    const lines = [
+      "[+] Connecting to USB interface...",
+      "[✓] USB connected successfully.",
+      "[*] Scanning intercepted data packets...",
+      "[*] Decrypting stream...",
+      "[!] Suspicious transmission detected.",
+      "[*] Locating signal origin...",
+      "[*] Triangulating GPS coordinates...",
+      "Decrypting █████████ ████ ████ ███...",
+      "[✓] Connection to satellite uplink established...",
+      "[*] Searching for bomb location data...",
+      "[✓] LOCATION FOUND!",
+      "📍 <a href='https://earth.google.com/web/data=MkEKPwo9CiExcUVhM0wxc2ZrM0lXVkJDalU0c3YxYjRGdEQ0dFRCOEgSFgoUMEUwQzkzMDhCRTM4Nzg1RTQ0NEUgAUICCABKBwj3zoBQEAE' target='_blank'>Open location in Google Earth</a>",
+      "\n>>> MORE INFO FOUND <<<",
+      "🔴 CUT THE <span class='red-wire'>RED</span> WIRE!",
+      "TIME REMAINING: 02:54:17"
+    ];
+
+    let i = 0;
+    function typeLine() {
+      if (i < lines.length) {
+        terminal.innerHTML += lines[i] + "\n";
+        terminal.scrollTop = terminal.scrollHeight;
+        i++;
+        setTimeout(typeLine, 1200); // type delay
+      }
+    }
+
+    typeLine();
+  </script>
+</body>
+</html>
